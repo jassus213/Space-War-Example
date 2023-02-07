@@ -1,6 +1,8 @@
+using Common.Interfaces;
+
 namespace UI.Main_Menu.Installers
 {
-    public interface IMainMenuView
+    public interface IMainMenuView : IHavePresenter<IMainMenuPresenter>
     {
     }
 }

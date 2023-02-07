@@ -1,3 +1,4 @@
+using UI.Signals;
 using Zenject;
 
 namespace UI.Main_Menu.Installers.Installers
@@ -9,6 +10,12 @@ namespace UI.Main_Menu.Installers.Installers
             #region Presenter
 
             Container.BindInterfacesAndSelfTo<MainMenuPresenter>().AsSingle();
+
+            #endregion
+
+            #region Signals
+
+            Container.DeclareSignal<MenuSignals.OpenSettings>().OptionalSubscriber();
 
             #endregion
         }
