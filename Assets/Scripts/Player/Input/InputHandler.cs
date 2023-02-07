@@ -17,6 +17,7 @@ namespace Player.InputHandler
             _inputState.AxisRawHorizontal = Input.GetAxisRaw("Horizontal");
             _inputState.AxisRawVertical = Input.GetAxisRaw("Vertical");
             _inputState.IsFiring = Input.GetMouseButton(0);
+            _inputState.IsAccelerating = Input.GetKey(KeyCode.LeftShift);
         }
     }
 }

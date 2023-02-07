@@ -7,10 +7,11 @@ namespace Player.Handlers
 {
     public class MoveHandler : IFixedTickable
     {
-        private readonly float _defaultSpeed = 100;
-        private readonly float _runningSpeed = 125;
+        private readonly float _defaultSpeed = 150;
+        private readonly float _acceleratingSpeed = 500;
+        private float _currentSpeed;
         private readonly float _rotationSpeed = 100;
-        
+
 
         private Vector2 _movementDirection;
 
@@ -28,8 +29,13 @@ namespace Player.Handlers
         {
             if (_inputState.AxisRawHorizontal == 0 && _inputState.AxisRawVertical == 0)
                 return;
-        
-            Move(); 
+
+            if (_inputState.IsAccelerating)
+                _currentSpeed = _acceleratingSpeed;
+            else
+                _currentSpeed = _defaultSpeed;
+
+            Move();
 
             Rotate();
         }
@@ -39,8 +45,8 @@ namespace Player.Handlers
         {
             _movementDirection = new Vector2(_inputState.AxisRawHorizontal,
                 _inputState.AxisRawVertical).normalized;
-            var resultDirection = new Vector2(_movementDirection.x * _defaultSpeed * Time.fixedDeltaTime,
-                _movementDirection.y * _defaultSpeed * Time.fixedDeltaTime);
+            var resultDirection = new Vector2(_movementDirection.x * _currentSpeed * Time.fixedDeltaTime,
+                _movementDirection.y * _currentSpeed * Time.fixedDeltaTime);
 
             _playerModel.Move(resultDirection);
         }
