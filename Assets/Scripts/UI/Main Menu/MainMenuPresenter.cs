@@ -1,4 +1,5 @@
 using Common;
+using DefaultNamespace.Signals;
 using UI.Signals;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace UI.Main_Menu.Installers
         public void StartNewGame()
         {
             SceneLoader.LoadScene(ScenesInfo.GameScene);
+            _signalBus.TryFire(new LevelSignals.StartLevel {LevelIndex = ScenesInfo.GameScene});
         }
 
         public void LoadGame()
