@@ -18,7 +18,7 @@
 
         public virtual void LogicUpdate()
         {
-
+            
         }
 
         public virtual void PhysicsUpdate()

@@ -4,6 +4,7 @@ using Enemy.Data;
 using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
+using EnemyFacade = Enemy.EnemyFacade;
 using Random = UnityEngine.Random;
 
 namespace Levels.Factory
@@ -13,14 +14,17 @@ namespace Levels.Factory
         private readonly DataLevels _dataLevels;
         private readonly EnemiesData _enemiesData;
         private readonly DiContainer _diContainer;
+        private readonly SignalBus _signalBus;
 
-        public EnemyFactory(DataLevels dataLevels, EnemiesData enemiesData, DiContainer diContainer)
+        public EnemyFactory(DataLevels dataLevels, EnemiesData enemiesData, DiContainer diContainer,
+            SignalBus signalBus)
         {
             _dataLevels = dataLevels;
             _enemiesData = enemiesData;
             _diContainer = diContainer;
+            _signalBus = signalBus;
         }
-        
+
         public EnemyFacade[] Create(int levelIndex)
         {
             var countOfEnemies = GetRandomCountOfEnemies(levelIndex);
@@ -29,9 +33,11 @@ namespace Levels.Factory
 
             for (int i = 0; i < countOfEnemies; i++)
             {
-                var enemy = _enemiesData.EnemiesTypes[GetRandomTypeShip()];
-                _diContainer.InstantiatePrefab(enemy, postions[i], quaternion.identity, null);
-                enemies.Add(enemy);
+                var enemyType = _enemiesData.EnemiesTypes[GetRandomTypeShip()];
+                var enemy = _diContainer.InstantiatePrefab(enemyType, postions[i], quaternion.identity, null);
+                var stateMachine = new StateMachine(_signalBus);
+                enemy.GetComponent<EnemyFacade>().Construct(stateMachine);
+                enemies.Add(enemyType);
             }
 
             return enemies.ToArray();
@@ -44,6 +50,7 @@ namespace Levels.Factory
 
         private Vector3[] GetRandomPositionInWorld(int levelIndex, int countOfEnemies)
         {
+            //TODO Get ray positions by index level
             var arrayOfPositions = _dataLevels.LevelSettings[0];
             List<Vector3> resultVectors = new List<Vector3>();
 
@@ -62,6 +69,5 @@ namespace Levels.Factory
         {
             return Random.Range(1, _dataLevels.LevelSettings[levelIndex].Length);
         }
-        
     }
 }

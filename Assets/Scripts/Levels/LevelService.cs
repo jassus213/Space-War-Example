@@ -8,7 +8,6 @@ namespace Levels
     public class LevelService : MonoBehaviour
     {
         private EnemyFacade.Factory _enemyFactory;
-
         
         [Inject]
         private void Construct(EnemyFacade.Factory factory)
