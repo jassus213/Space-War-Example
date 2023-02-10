@@ -2,6 +2,7 @@ using System;
 using Player.Handlers;
 using Player.InputHandler;
 using Player.Model;
+using Player.Signals;
 using UnityEngine;
 using Zenject;
 

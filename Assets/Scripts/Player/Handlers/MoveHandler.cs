@@ -1,5 +1,6 @@
 using Player.InputHandler;
 using Player.Model;
+using Player.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -17,11 +18,13 @@ namespace Player.Handlers
 
         private readonly InputState _inputState;
         private readonly PlayerModel _playerModel;
+        private readonly SignalBus _signalBus;
 
-        public MoveHandler(InputState inputState, PlayerModel playerModel)
+        public MoveHandler(InputState inputState, PlayerModel playerModel, SignalBus signalBus)
         {
             _inputState = inputState;
             _playerModel = playerModel;
+            _signalBus = signalBus;
         }
 
 
@@ -47,8 +50,9 @@ namespace Player.Handlers
                 _inputState.AxisRawVertical).normalized;
             var resultDirection = new Vector2(_movementDirection.x * _currentSpeed * Time.fixedDeltaTime,
                 _movementDirection.y * _currentSpeed * Time.fixedDeltaTime);
-
+            
             _playerModel.Move(resultDirection);
+            _signalBus.TryFire(new PlayerSignals.PlayerChangePos { PlayerPos = _playerModel.Transform.position});
         }
 
         private void Rotate()

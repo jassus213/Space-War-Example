@@ -6,7 +6,8 @@ namespace UI.Main_Menu.Installers
 {
     public class MainMenuView : MonoBehaviour, IMainMenuView, IInitializable
     {
-        [Header("Buttons")] [SerializeField] private Button newGameButton;
+        [Header("Buttons")]
+        [SerializeField] private Button newGameButton;
         [SerializeField] private Button settings;
         [SerializeField] private Button loadGameButton;
         [SerializeField] private Button exitGameButton;
