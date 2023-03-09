@@ -1,4 +1,5 @@
-﻿using DefaultNamespace.Signals;
+﻿using Characters.Enemy;
+using DefaultNamespace.Signals;
 using Enemy;
 using Enemy.Data;
 using Levels.Factory;
@@ -12,7 +13,8 @@ namespace Levels.Installers
         [SerializeField] private ScriptableObject levelData;
         [SerializeField] private ScriptableObject enemiesData;
         [SerializeField] private LevelService levelService;
-         public override void InstallBindings()
+        
+        public override void InstallBindings()
         {
             #region Signals
 

@@ -1,3 +1,4 @@
+using UI.Main_Menu.Signals;
 using UI.Signals;
 using Zenject;
 
@@ -15,7 +16,8 @@ namespace UI.Main_Menu.Installers.Installers
 
             #region Signals
 
-            Container.DeclareSignal<MenuSignals.OpenSettings>().OptionalSubscriber();
+            Container.DeclareSignal<MenuSignals.OpenMainMenu>().OptionalSubscriber();
+            Container.DeclareSignal<MenuSignals.CloseMainMenu>().OptionalSubscriber();
 
             #endregion
         }

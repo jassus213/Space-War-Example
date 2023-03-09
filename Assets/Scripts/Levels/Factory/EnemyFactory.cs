@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using Characters.Enemy;
 using Enemy;
 using Enemy.Data;
+using Enemy.States;
 using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
-using EnemyFacade = Enemy.EnemyFacade;
+using EnemyFacade = Characters.Enemy.EnemyFacade;
 using Random = UnityEngine.Random;
 
 namespace Levels.Factory
@@ -28,19 +30,27 @@ namespace Levels.Factory
         public EnemyFacade[] Create(int levelIndex)
         {
             var countOfEnemies = GetRandomCountOfEnemies(levelIndex);
-            var postions = GetRandomPositionInWorld(levelIndex, countOfEnemies);
+            var positions = GetRandomPositionInWorld(levelIndex, countOfEnemies);
             List<EnemyFacade> enemies = new List<EnemyFacade>();
 
             for (int i = 0; i < countOfEnemies; i++)
             {
                 var enemyType = _enemiesData.EnemiesTypes[GetRandomTypeShip()];
-                var enemy = _diContainer.InstantiatePrefab(enemyType, postions[i], quaternion.identity, null);
+                var enemy = CreateEnemy(enemyType, positions[i]);
                 var stateMachine = new StateMachine(_signalBus);
-                enemy.GetComponent<EnemyFacade>().Construct(stateMachine);
+                var enemyModel = new EnemyModel(enemy.Rigidbody, enemy.transform);
+                enemy.Construct(stateMachine, enemyModel);
                 enemies.Add(enemyType);
             }
 
             return enemies.ToArray();
+        }
+
+
+        private EnemyFacade CreateEnemy(EnemyFacade enemyType, Vector3 position)
+        {
+            var enemy = _diContainer.InstantiatePrefab(enemyType, position, quaternion.identity, null).GetComponent<EnemyFacade>();
+            return enemy;
         }
 
         private int GetRandomTypeShip()
@@ -59,7 +69,7 @@ namespace Levels.Factory
                 //TODO Eliminate the possibility of spawning at one point
                 var rnd = Random.Range(0, arrayOfPositions.Length);
                 var pos = arrayOfPositions[rnd];
-                resultVectors.Add(pos);
+                resultVectors.Add(pos.transform.position);
             }
 
             return resultVectors.ToArray();

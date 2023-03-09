@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455c479cd7ba4e7aa7acb4ea830c44ae, type: 3}
   m_Name: SceneData
   m_EditorClassIdentifier: 
-  FirstLevelSpawns:
-  - {x: -541, y: 57, z: 0}
-  - {x: -453, y: 68, z: 0}
-  - {x: -583, y: 35, z: 0}
-  SecondLevelSpawns:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  firstLevelSpawns:
+  - {fileID: 5024153829952356790, guid: 4c5c438c6eba6c44ebe9a69c114f5e06, type: 3}
+  - {fileID: 6098617293294507852, guid: c6f175b0f8693014cbbfe7872d7bfa4b, type: 3}
+  - {fileID: 9166085709083558020, guid: 9024e974a3f9472489e765befedf4887, type: 3}
+  secondLevelSpawns:
+  - {fileID: 5024153829952356790, guid: 4c5c438c6eba6c44ebe9a69c114f5e06, type: 3}
+  - {fileID: 6098617293294507852, guid: c6f175b0f8693014cbbfe7872d7bfa4b, type: 3}
+  - {fileID: 9166085709083558020, guid: 9024e974a3f9472489e765befedf4887, type: 3}

@@ -1,4 +1,5 @@
-﻿using Enemy;
+﻿using Characters.Enemy;
+using Enemy;
 using UnityEngine;
 using Zenject;
 

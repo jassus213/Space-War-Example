@@ -1,3 +1,4 @@
+using UI.Main_Menu.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -26,6 +27,11 @@ namespace UI.Main_Menu.Installers
         public void SetPresenter(IMainMenuPresenter presenter)
         {
             _presenter = presenter;
+        }
+
+        public void Show(bool value)
+        {
+            gameObject.SetActive(value);
         }
     }
 }

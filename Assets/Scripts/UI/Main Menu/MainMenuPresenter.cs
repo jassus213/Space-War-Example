@@ -1,12 +1,16 @@
+using System;
 using Common;
 using DefaultNamespace.Signals;
+using UI.Main_Menu.Installers;
+using UI.Main_Menu.Interfaces;
+using UI.Main_Menu.Signals;
 using UI.Signals;
 using UnityEngine;
 using Zenject;
 
-namespace UI.Main_Menu.Installers
+namespace UI.Main_Menu
 {
-    public class MainMenuPresenter : IMainMenuPresenter, IInitializable
+    public class MainMenuPresenter : IMainMenuPresenter, IInitializable, IDisposable
     {
         private readonly IMainMenuView _view;
         private readonly SignalBus _signalBus;
@@ -30,7 +34,8 @@ namespace UI.Main_Menu.Installers
         
         public void OpenSettings()
         {
-            _signalBus.TryFire<MenuSignals.OpenSettings>();
+            _signalBus.TryFire<SettingsSignals.OpenSettings>();
+            _view.Show(false);
         }
 
         public void Exit()
@@ -45,6 +50,18 @@ namespace UI.Main_Menu.Installers
         public void Initialize()
         {
             _view.SetPresenter(this);
+            
+            _signalBus.Subscribe<MenuSignals.OpenMainMenu>(OpenMainMenuCallBack);
+        }
+
+        private void OpenMainMenuCallBack(MenuSignals.OpenMainMenu args)
+        {
+            _view.Show(true);
+        }
+
+        public void Dispose()
+        {
+            _signalBus.Unsubscribe<MenuSignals.OpenMainMenu>(OpenMainMenuCallBack);
         }
     }
 }

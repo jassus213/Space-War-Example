@@ -1,6 +1,6 @@
 ﻿namespace DefaultNamespace.Signals
 {
-    public class LevelSignals
+    public struct LevelSignals
     {
         public struct StartLevel
         {

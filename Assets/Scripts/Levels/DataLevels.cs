@@ -8,19 +8,19 @@ namespace Levels
     public class DataLevels : ScriptableObject
     {
         [Header("PossibleSpawns")] 
-        public Vector3[] FirstLevelSpawns;
-        public Vector3[] SecondLevelSpawns;
+        [SerializeField] private Transform[] firstLevelSpawns;
+        [SerializeField] private Transform[] secondLevelSpawns;
 
 
-        public Dictionary<int, Vector3[]> LevelSettings;
+        public Dictionary<int, Transform[]> LevelSettings;
 
         [Inject]
-        private void Consturct()
+        private void Construct()
         {
-            LevelSettings = new Dictionary<int, Vector3[]>()
+            LevelSettings = new Dictionary<int, Transform[]>()
             {
-                {0, FirstLevelSpawns},
-                {1, SecondLevelSpawns}
+                {0, firstLevelSpawns},
+                {1, secondLevelSpawns}
             };
         }
     }
