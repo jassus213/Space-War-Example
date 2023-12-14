@@ -1,4 +1,4 @@
-﻿namespace Player.InputHandler
+﻿namespace Characters.Player.Input
 {
     public class InputState
     {

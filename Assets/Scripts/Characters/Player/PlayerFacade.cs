@@ -1,23 +1,25 @@
+using Characters.Common.Interfaces;
 using Characters.Player.Model.Interfaces;
 using UnityEngine;
+using Zenject;
 
 namespace Characters.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerFacade : MonoBehaviour
+    public class PlayerFacade : MonoBehaviour, IDamageable
     {
-        public bool IsDead => _model.IsDead;
         private Rigidbody2D _rigidbody => gameObject.GetComponent<Rigidbody2D>();
         public Transform Transform => gameObject.transform;
         
-        private readonly IModel _model;
+        private IModel _model;
 
-        public PlayerFacade(IModel model)
+        [Inject]
+        public void Constructor(IModel model)
         {
             _model = model;
         }
 
-        public void TakeDamage(float damage)
+        public void GetDamage(float damage)
         {
             _model.TakeDamage(damage);
         }

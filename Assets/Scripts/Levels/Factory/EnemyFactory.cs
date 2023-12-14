@@ -2,7 +2,6 @@
 using Characters.Enemy;
 using Enemy;
 using Enemy.Data;
-using Enemy.States;
 using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
@@ -33,7 +32,7 @@ namespace Levels.Factory
             var positions = GetRandomPositionInWorld(levelIndex, countOfEnemies);
             List<EnemyFacade> enemies = new List<EnemyFacade>();
 
-            for (int i = 0; i < countOfEnemies; i++)
+            for (var i = 0; i < countOfEnemies; i++)
             {
                 var enemyType = _enemiesData.EnemiesTypes[GetRandomTypeShip()];
                 var enemy = CreateEnemy(enemyType, positions[i]);
@@ -49,7 +48,7 @@ namespace Levels.Factory
 
         private EnemyFacade CreateEnemy(EnemyFacade enemyType, Vector3 position)
         {
-            var enemy = _diContainer.InstantiatePrefab(enemyType, position, quaternion.identity, null).GetComponent<EnemyFacade>();
+            var enemy = _diContainer.InstantiatePrefabForComponent<EnemyFacade>(enemyType, position, quaternion.identity, null);
             return enemy;
         }
 

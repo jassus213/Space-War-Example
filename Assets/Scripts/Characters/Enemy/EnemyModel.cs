@@ -1,4 +1,5 @@
-﻿using Characters.Player.Model.Interfaces;
+﻿using System;
+using Characters.Player.Model.Interfaces;
 using UnityEngine;
 
 namespace Characters.Enemy
@@ -8,8 +9,8 @@ namespace Characters.Enemy
         public Quaternion Rotation => _transform.rotation;
         public Vector3 Position => _rigidbody.position;
         public float Health => _currentHealth;
+        public Action DeadEvent { get; set; }
         private float _currentHealth;
-        public bool IsDead { get; }
 
         private readonly Rigidbody2D _rigidbody;
         private readonly float _maxHealth = 100;

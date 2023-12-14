@@ -1,7 +1,5 @@
-using Characters.Player.Model;
+using Characters.Player.Input;
 using Characters.Player.Model.Interfaces;
-using Player;
-using Player.InputHandler;
 using Player.Signals;
 using UnityEngine;
 using Zenject;
@@ -19,10 +17,10 @@ namespace Characters.Player.Handlers
         private Vector2 _movementDirection;
 
         private readonly InputState _inputState;
-        private readonly PlayerModel _playerModel;
+        private readonly IMovable _playerModel;
         private readonly SignalBus _signalBus;
 
-        public MoveHandler(InputState inputState, PlayerModel playerModel, SignalBus signalBus)
+        public MoveHandler(InputState inputState, IMovable playerModel, SignalBus signalBus)
         {
             _inputState = inputState;
             _playerModel = playerModel;
@@ -37,10 +35,7 @@ namespace Characters.Player.Handlers
             if (_inputState.AxisRawHorizontal == 0 && _inputState.AxisRawVertical == 0)
                 return;
 
-            if (_inputState.IsAccelerating)
-                _currentSpeed = _acceleratingSpeed;
-            else
-                _currentSpeed = _defaultSpeed;
+            _currentSpeed = _inputState.IsAccelerating ? _acceleratingSpeed : _defaultSpeed;
 
             Move();
 

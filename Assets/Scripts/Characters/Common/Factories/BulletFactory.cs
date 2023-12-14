@@ -1,20 +1,23 @@
-﻿using Characters.Common;
+﻿using Characters.Common.Shooting;
+using UnityEngine;
 using Zenject;
 
-namespace Common.Factories
+namespace Characters.Common.Factories
 {
-    public class BulletFactory : IFactory<Bullet>
+    public class BulletFactory : IFactory<Transform, Bullet>
     {
-        private readonly DiContainer _diContainer;
+        private readonly IInstantiator _instantiator;
+        private static GameObject Prefab => Resources.Load<GameObject>("Bullet");
         
-        public BulletFactory(DiContainer diContainer)
+        public BulletFactory(IInstantiator instantiator)
         {
-            _diContainer = diContainer;
+            _instantiator = instantiator;
         }
-        
-        public Bullet Create()
+
+        public Bullet Create(Transform param)
         {
-            return new Bullet(10);
+            var bullet = _instantiator.InstantiatePrefabForComponent<Bullet>(Prefab, param.position, param.rotation, null);
+            return bullet;
         }
     }
 }

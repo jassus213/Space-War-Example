@@ -7,11 +7,8 @@ using Zenject;
 
 namespace Characters.Enemy
 {
-    public class EnemyFacade : MonoBehaviour, ICanGetDamage
+    public class EnemyFacade : MonoBehaviour, IDamageable
     {
-        public bool IsDead => _model.IsDead;
-        public float Health => _model.Health;
-
         private StateMachine _stateMachine;
         private IModel _model;
         public Rigidbody2D Rigidbody => gameObject.GetComponent<Rigidbody2D>();
@@ -53,6 +50,7 @@ namespace Characters.Enemy
 
         public void GetDamage(float damage)
         {
+            Debug.Log($"Enemy get damage {damage}");
             _model.TakeDamage(damage);
         }
         

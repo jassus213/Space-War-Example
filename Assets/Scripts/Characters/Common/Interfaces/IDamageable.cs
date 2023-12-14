@@ -1,6 +1,6 @@
 ﻿namespace Characters.Common.Interfaces
 {
-    public interface ICanGetDamage
+    public interface IDamageable
     {
         void GetDamage(float damage);
     }

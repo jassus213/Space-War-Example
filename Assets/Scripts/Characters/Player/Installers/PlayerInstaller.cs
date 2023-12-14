@@ -1,12 +1,16 @@
 using System;
+using System.Collections.Generic;
+using Characters.Common;
+using Characters.Common.Factories;
+using Characters.Common.Handlers;
+using Characters.Common.Shooting;
 using Characters.Player.Handlers;
+using Characters.Player.Input;
 using Characters.Player.Model;
-using Player.InputHandler;
-using Player.Signals;
 using UnityEngine;
 using Zenject;
 
-namespace Player.Installers
+namespace Characters.Player.Installers
 {
     public class PlayerInstaller : MonoInstaller
     {
@@ -14,19 +18,21 @@ namespace Player.Installers
 
         public override void InstallBindings()
         {
-            #region Signals
+            Container.BindInterfacesAndSelfTo<PlayerFacade>().FromInstance(_settings.PlayerFacade).AsSingle();
 
-            
-
-            #endregion
-            
-            Container.Bind<PlayerModel>().AsSingle()
+            Container.BindInterfacesAndSelfTo<PlayerModel>().AsCached()
                 .WithArguments(_settings.Rigidbody, _settings.Transform);
 
-            Container.BindInterfacesAndSelfTo<InputHandler.InputHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
             Container.Bind<InputState>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<MoveHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<HealthHandler>().AsCached();
+            var queue = new Queue<Transform>(_settings.ShootPositions);
+            Container.BindInterfacesAndSelfTo<ShootingHandler>().AsCached().WithArguments(queue);
+
+            Container.BindFactory<Transform, Bullet, Bullet.Factory>()
+                .FromFactory<BulletFactory>();
         }
 
         [Serializable]
@@ -34,6 +40,9 @@ namespace Player.Installers
         {
             public Rigidbody2D Rigidbody;
             public Transform Transform;
+            public PlayerFacade PlayerFacade;
+
+            public Transform[] ShootPositions;
         }
     }
 }

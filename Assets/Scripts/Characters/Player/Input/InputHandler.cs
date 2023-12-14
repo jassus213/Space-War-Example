@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace Player.InputHandler
+namespace Characters.Player.Input
 {
     public class InputHandler : IFixedTickable
     {
@@ -14,10 +14,10 @@ namespace Player.InputHandler
         
         public void FixedTick()
         {
-            _inputState.AxisRawHorizontal = Input.GetAxisRaw("Horizontal");
-            _inputState.AxisRawVertical = Input.GetAxisRaw("Vertical");
-            _inputState.IsFiring = Input.GetMouseButton(0);
-            _inputState.IsAccelerating = Input.GetKey(KeyCode.LeftShift);
+            _inputState.AxisRawHorizontal = UnityEngine.Input.GetAxisRaw("Horizontal");
+            _inputState.AxisRawVertical = UnityEngine.Input.GetAxisRaw("Vertical");
+            _inputState.IsFiring = UnityEngine.Input.GetMouseButton(0);
+            _inputState.IsAccelerating = UnityEngine.Input.GetKey(KeyCode.LeftShift);
         }
     }
 }
